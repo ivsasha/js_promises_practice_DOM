@@ -24,21 +24,24 @@ const secondPromise = new Promise((resolve, reject) => {
 });
 
 const thirdPromise = new Promise((resolve, reject) => {
-  let counter = 0;
+  const clicks = {
+    left: 0,
+    right: 0,
+  };
 
-  html.addEventListener('click', (e) => {
-    counter++;
+  html.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    clicks.right = true;
 
-    if (counter === 2) {
+    if (clicks.left && clicks.right) {
       resolve('Third promise was resolved');
     }
   });
 
-  html.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    counter++;
+  html.addEventListener('click', (e) => {
+    clicks.left = true;
 
-    if (counter === 2) {
+    if (clicks.left && clicks.right) {
       resolve('Third promise was resolved');
     }
   });
